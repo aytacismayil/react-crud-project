@@ -12,7 +12,7 @@ const AddUserForm = () => {
 
   const onSubmitHandle = (e) => {
     e.preventDefault();
-    if (!user.name || !user.username) return;
+    if (!user.name || !user.username || !user.last) return;
     // addUser(user);
     setUser(initialFormState);
   };
