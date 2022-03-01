@@ -28,6 +28,7 @@ const AddUserForm = () => {
             placeholder="Enter First Name"
             name="first"
             onChange={handleInputChange}
+            value={user.name}
           />
         </Form.Group>
 
@@ -38,6 +39,7 @@ const AddUserForm = () => {
             placeholder="Enter Last Name"
             name="last"
             onChange={handleInputChange}
+            value={user.last}
           />
         </Form.Group>
 
@@ -48,6 +50,7 @@ const AddUserForm = () => {
             placeholder="Enter Username"
             name="username"
             onChange={handleInputChange}
+            value={user.username}
           />
         </Form.Group>
 
