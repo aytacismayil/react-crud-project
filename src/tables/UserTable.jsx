@@ -1,9 +1,15 @@
-import React from "react";
-import { Table } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Table, Modal } from "react-bootstrap";
 
-const UserTable = ({ users }) => {
+const UserTable = ({ users, deleteUser }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
+
   return (
-    <div>
+    <>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -14,17 +20,47 @@ const UserTable = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td> {user.last} </td>
-              <td>{user.username}</td>
-            </tr>
-          ))}
+          {users.length > 0 ? (
+            users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.first}</td>
+                <td> {user.last} </td>
+                <td>{user.username}</td>
+                <td>
+                  <Button className="button muted-button" onClick={handleShow}>
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>data not fount</tr>
+          )}
         </tbody>
       </Table>
-    </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button
+            variant="primary"
+            onClick={() => {
+              deleteUser(user.id);
+              handleClose(true);
+            }}
+          >
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-const AddUserForm = () => {
-  const initialFormState = { id: null, name: "", last: "", username: "" };
+const AddUserForm = (props) => {
+  const { addUser } = props;
+  const initialFormState = { id: null, first: "", last: "", username: "" };
   const [user, setUser] = useState(initialFormState);
 
   const handleInputChange = (e) => {
@@ -12,8 +13,8 @@ const AddUserForm = () => {
 
   const onSubmitHandle = (e) => {
     e.preventDefault();
-    if (!user.name || !user.username || !user.last) return;
-    // addUser(user);
+    if (!user.first || !user.username || !user.last) return;
+    addUser(user);
     setUser(initialFormState);
   };
 
@@ -28,7 +29,7 @@ const AddUserForm = () => {
             placeholder="Enter First Name"
             name="first"
             onChange={handleInputChange}
-            value={user.name}
+            value={user.first}
           />
         </Form.Group>
 

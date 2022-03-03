@@ -8,20 +8,29 @@ import "./App.css";
 
 const App = () => {
   const usersData = [
-    { id: 1, name: "Aytaj", last: "Ismayil", username: "@iaytaj" },
-    { id: 2, name: "Fatma", last: "Memmedova", username: "@m_fatma" },
-    { id: 3, name: "Aisa", last: "Suleymanova", username: "@aisa" },
+    { id: 1, first: "Aytaj", last: "Ismayil", username: "@iaytaj" },
+    { id: 2, first: "Fatma", last: "Memmedova", username: "@m_fatma" },
+    { id: 3, first: "Aisa", last: "Suleymanova", username: "@aisa" },
   ];
 
   const [users, setUsers] = useState(usersData);
+
+  const addUser = (user) => {
+    user.id = users.length + 1;
+    setUsers([...users, user]);
+  };
+
+  const deleteUser = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
 
   return (
     <Container fluid>
       <Row>
         <Col>
           <EditUserForm />
-          <AddUserForm />
-          <UserTable users={users} />
+          <AddUserForm addUser={addUser} />
+          <UserTable users={users} deleteUser={deleteUser} />
         </Col>
       </Row>
     </Container>
