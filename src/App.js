@@ -20,9 +20,7 @@ const App = () => {
     setUsers([...users, user]);
   };
 
-  const deleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  };
+ 
 
   return (
     <Container fluid>
@@ -30,7 +28,7 @@ const App = () => {
         <Col>
           <EditUserForm />
           <AddUserForm addUser={addUser} />
-          <UserTable users={users} deleteUser={deleteUser} />
+          <UserTable users={users} setUser={()=>setUsers()}  />
         </Col>
       </Row>
     </Container>

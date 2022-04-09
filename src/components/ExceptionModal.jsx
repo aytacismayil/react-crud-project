@@ -1,25 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal } from "react-bootstrap";
 
-const ExceptionModal = (props) => {
-  
+const ExceptionModal = ({ message, onDialog, isLoading }) => {
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={isLoading} onHide={onDialog}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{message}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => onDialog(true)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={() => onDialog(true)}>
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

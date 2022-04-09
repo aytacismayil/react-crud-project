@@ -1,12 +1,38 @@
-import React, { useState } from "react";
-import { Button, Table, Modal } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Button, Table } from "react-bootstrap";
+import ExceptionModal from "../components/ExceptionModal";
 
-const UserTable = ({ users, deleteUser }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => {
-    setShow(false);
+const UserTable = ({ users, setUsers }) => {
+  const [dialog, setDialog] = useState({
+    message: "",
+    isLoading: false,
+  });
+  const idProductRef = useRef();
+
+  const handleDialog = (message, isLoading) => {
+    setDialog({
+      message,
+      isLoading,
+    });
   };
-  const handleShow = () => setShow(true);
+
+  const handleDelete = (id) => {
+    handleDialog("Are you sure you want to delete?", true);
+    idProductRef.current = id;
+  };
+
+  const areYouSureDelete = (choose) => {
+    if (choose) {
+      setUsers(users.filter((p) => p.id !== idProductRef.current));
+      handleDialog("", false);
+      setDialog({
+        message: "Are you sure you want to delete?",
+        isLoading: false,
+      });
+    } else {
+      handleDialog("", false);
+    }
+  };
 
   return (
     <>
@@ -28,7 +54,10 @@ const UserTable = ({ users, deleteUser }) => {
                 <td> {user.last} </td>
                 <td>{user.username}</td>
                 <td>
-                  <Button className="button muted-button" onClick={handleShow}>
+                  <Button
+                    className="button muted-button"
+                    onClick={() => handleDelete(user.id)}
+                  >
                     Delete
                   </Button>
                 </td>
@@ -40,26 +69,13 @@ const UserTable = ({ users, deleteUser }) => {
         </tbody>
       </Table>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          {/* <Button
-            variant="primary"
-            onClick={() => {
-              deleteUser(user.id);
-              handleClose(true);
-            }}
-          >
-            Save Changes
-          </Button> */}
-        </Modal.Footer>
-      </Modal>
+      {dialog.isLoading && (
+        <ExceptionModal
+          onDialog={areYouSureDelete}
+          message={dialog.message}
+          isLoading={dialog.isLoading}
+        />
+      )}
     </>
   );
 };
